@@ -14,9 +14,9 @@ function App() {
 
   // Calculate password strength based on length
   const getStrength = () => {
-    if (length < 8) return { text: 'Weak', color: 'bg-red-500' }
-    if (length < 12) return { text: 'Medium', color: 'bg-yellow-500' }
-    return { text: 'Very strong', color: 'bg-green-500' }
+    if (length < 8) return { text: 'Weak', color: 'bg-red-500', bgClass: 'bg-gradient-to-br from-red-100 to-red-200' }
+    if (length < 12) return { text: 'Medium', color: 'bg-yellow-500', bgClass: 'bg-gradient-to-br from-yellow-100 to-yellow-200' }
+    return { text: 'Very strong', color: 'bg-green-500', bgClass: 'bg-gradient-to-br from-green-100 to-green-200' }
   }
 
   // Generate random password
@@ -44,6 +44,11 @@ function App() {
 
   // Copy password to clipboard
   const copyToClipboard = () => {
+    // while using this freq it copy white blue Highlite but
+    // after that we have click on screen 
+
+    passwordRef.current?.select();
+    // -----------***----------- //
     window.navigator.clipboard.writeText(password)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
@@ -52,8 +57,9 @@ function App() {
   const strength = getStrength()
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4'>
-      <div className='w-full max-w-2xl'>
+    // Accounding to Background-Changes ".bgClass"
+    <div className={`min-h-screen ${strength.bgClass} flex items-center justify-center p-4`}>
+      <div className='w-full max-w-6xl'>
         {/* Header Section */}
         <div className='text-center mb-12'>
           <h1 className='text-4xl md:text-5xl font-bold text-gray-900 mb-4'>
@@ -64,8 +70,10 @@ function App() {
           </p>
         </div>
 
-        {/* Main Card */}
-        <div className='bg-white rounded-2xl shadow-xl p-8 md:p-10'>
+        {/* Main Container with Image */}
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-8 items-center'>
+          {/* Main Card */}
+          <div className='bg-white rounded-2xl shadow-xl p-8 md:p-10'>
           {/* Password Display Section */}
           <div className='mb-8'>
             <div className='flex gap-3 mb-4'>
@@ -92,7 +100,7 @@ function App() {
               {/* Copy Button */}
               <button
                 onClick={copyToClipboard}
-                className={`px-6 py-3 rounded-3xl font-semibold text-white transition-all duration-200 whitespace-nowrap ${
+                className={`px-5 py-3 rounded-3xl font-semibold text-white transition-all duration-200 whitespace-nowrap ${
                   copied
                     ? 'bg-green-500 hover:bg-green-600'
                     : 'bg-blue-500 hover:bg-blue-600'
@@ -173,6 +181,28 @@ function App() {
               </label>
             </div>
           </div>
+        </div>
+
+        {/* Side Image Section */}
+        <div className='hidden md:flex items-center justify-center'>
+          <div className='relative'>
+            <div className={`w-80 h-80 rounded-2xl shadow-xl overflow-hidden ${strength.bgClass}`}>
+              <div className='w-full h-full flex items-center justify-center p-8'>
+                <div className='text-center'>
+                  <div className='text-6xl mb-4'>
+                    {length < 8 ? '🔓' : length < 12 ? '🔐' : '🛡️'}
+                  </div>
+                  <p className='text-xl font-bold text-gray-800 mb-2'>
+                    {strength.text} Password
+                  </p>
+                  <p className='text-sm text-gray-700'>
+                    Length: {length}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
       </div>
     </div>
