@@ -7,13 +7,13 @@
 
   color-scheme: light dark;
   color: rgba(21, 20, 20, 0.87);
-  background-color: #67ad98;
+  background-color: #ffffff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+} 
 /* 
 a {
   font-weight: 500;

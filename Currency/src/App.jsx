@@ -46,7 +46,7 @@ function App() {
                            convert()
                         }}
                     >
-                        <div className="w-full mb-6 transition-transform duration-200 hover:translate-x-1">
+                        <div className="w-full mb-6 transition-transform duration-200 hover:-translate-y-0.5">
                             <InputBox
                                 label="From"
                             amount={amount}
@@ -59,13 +59,13 @@ function App() {
                         <div className="relative w-full h-0.5">
                             <button
                                 type="button"
-                                className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-white rounded-lg bg-blue-600 text-white px-3 py-1 hover:bg-blue-700 transition-all duration-300 hover:shadow-lg hover:scale-110 active:scale-95"
+                                className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-white rounded-lg bg-white text-white px-3 py-1.5  transition-all duration-300 hover:shadow-lg hover:scale-110 active:scale-95 flex items-center justify-center"
                                 onClick={swap}
                             >
-                                swap
+                                <img className='w-5 h-5' src="https://cdn-icons-png.flaticon.com/512/9870/9870522.png" alt="swap" />
                             </button>
                         </div>
-                        <div className="w-full mt-6 mb-4 transition-transform duration-200 hover:translate-x-1">
+                        <div className="w-full mt-6 mb-4 transition-transform duration-200 hover:-translate-y-0.5">
                             <InputBox
                               label="To"
                             amount={convertAmount}
