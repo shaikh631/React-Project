@@ -84,6 +84,12 @@ function App() {
           value={step}
           onChange={(e) => setStep(Number(e.target.value))}
         /><br/>
+        <input type="number" 
+          placeholder="Enter max value" 
+          className="px-4 py-2 outline-none text-white rounded mb-4 w-75 bg-black"
+          value={maxValue}
+          onChange={(e) => setMaxValue(Number(e.target.value))}
+         />
         
       </div>
     </div>
