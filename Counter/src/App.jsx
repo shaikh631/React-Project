@@ -13,10 +13,7 @@ function App() {
   
     setLastAction("up")
   }
-  // const addValue = () => {
-  //   setCount(count + step)
-  //   setLastAction("up")
-  // }      
+     
   const removeValue = () => {
     if (count > 0) {
       setCount(count - step)
