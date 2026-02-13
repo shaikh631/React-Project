@@ -46,6 +46,7 @@ function App() {
                            convert()
                         }}
                     >
+                        {/* // from  */}
                         <div className="w-full mb-6 transition-transform duration-200 hover:-translate-y-0.5">
                             <InputBox
                                 label="From"
@@ -56,6 +57,8 @@ function App() {
                             onAmountChange={(amount) => setAmount(amount)}
                             />
                         </div>
+
+                        {/* // swap */}
                         <div className="relative w-full h-0.5">
                             <button
                                 type="button"
@@ -65,6 +68,9 @@ function App() {
                                 <img className='w-5 h-5' src="https://cdn-icons-png.flaticon.com/512/9870/9870522.png" alt="swap" />
                             </button>
                         </div>
+
+
+                        {/* // to */}
                         <div className="w-full mt-6 mb-4 transition-transform duration-200 hover:-translate-y-0.5">
                             <InputBox
                               label="To"
@@ -76,6 +82,8 @@ function App() {
                                 
                             />
                         </div>
+
+                        {/* button  */}
                         <button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-3 rounded-lg font-semibold hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
                           Convert {from.toUpperCase()} to {to.toUpperCase()}
                         </button>
