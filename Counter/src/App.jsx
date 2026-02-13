@@ -28,11 +28,11 @@ function App() {
   const [maxValue, setMaxValue] = useState(100)
   const restart = () => {
     setCount(0)
-    setLastAction("null")
+    setLastAction(null)
   }
   const handleStepChange = (e) => {
     setStep(Number(e.target.value))
-    setMaxValue(Number(e.target.value)) // Update maxValue based on the new step value
+     // Update maxValue based on the new step value
   }
 
 
