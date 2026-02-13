@@ -13,7 +13,10 @@ function App() {
   
     setLastAction("up")
   }
-
+  // const addValue = () => {
+  //   setCount(count + step)
+  //   setLastAction("up")
+  // }      
   const removeValue = () => {
     if (count > 0) {
       setCount(count - step)
@@ -81,14 +84,7 @@ function App() {
           value={step}
           onChange={(e) => setStep(Number(e.target.value))}
         /><br/>
-        <p className="text-white mt-0  me-56 m-2">Max Value</p>
-        <input 
-          type="number" 
-          placeholder="Enter max value" 
-          className="px-4 py-2 outline-none text-white rounded mb-4 w-75 bg-black"
-          value={maxValue}
-          onChange={(e) => setMaxValue(Number(e.target.value))}
-        />
+        
       </div>
     </div>
   )
