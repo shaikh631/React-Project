@@ -7,7 +7,8 @@ import Layout from './Layout.jsx';
 import Home from './components/Home/Home.jsx';
 import About from './components/About/About.jsx';
 import Contact from './components/Contact/Contact.jsx';
-import GitHub, { githubInfoLoader } from './components/GitHub/github.jsx';
+import GitHub from './components/GitHub/github.jsx';
+import LeetCode from './components/LeetCode/leetcode.jsx';
 
 const root = document.getElementById("root");
 const router = createBrowserRouter([
@@ -29,8 +30,11 @@ const router = createBrowserRouter([
       },
       {
         path :'/github',
-        element:<GitHub/>,
-        loader: githubInfoLoader
+        element:<GitHub/>
+      },
+      {
+        path :'/leetcode',
+        element:<LeetCode/>
       }
     ]
   },
