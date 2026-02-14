@@ -31,7 +31,7 @@ function GitHub() {
  
 
   return (
-    <div className="container mx-auto px-4  m-t-10 max-w-4xl">
+    <div className="container mx-auto px-4  mt-10 m-10 max-w-4xl">
       <div className="bg-linear-to-r from-slate-900 to-slate-800 text-white p-6 rounded-xl shadow-lg flex items-center gap-4 flex-wrap">
         {userData ? (
           <>

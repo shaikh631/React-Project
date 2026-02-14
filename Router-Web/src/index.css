@@ -1,5 +1,20 @@
 @import "tailwindcss";
 
+/* Jet Black color scale */
+:root {
+  --color-jet-black-50: #eff4f6;
+  --color-jet-black-100: #dfe8ec;
+  --color-jet-black-200: #bed1da;
+  --color-jet-black-300: #9ebac7;
+  --color-jet-black-400: #7da3b5;
+  --color-jet-black-500: #5d8ca2;
+  --color-jet-black-600: #4a7082;
+  --color-jet-black-700: #385461;
+  --color-jet-black-800: #253841;
+  --color-jet-black-900: #131c20;
+  --color-jet-black-950: #0d1417;
+}
+
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

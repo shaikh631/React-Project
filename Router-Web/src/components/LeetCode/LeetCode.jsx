@@ -40,73 +40,91 @@ function LeetCode() {
   };
 
   return (
-    <div className="container mx-auto px-4 max-w-4xl">
-      <div className="bg-gradient-to-r from-yellow-500 to-orange-600 text-white p-6 rounded-xl shadow-lg flex items-center gap-4 flex-wrap">
-        {userData ? (
-          <>
-            <img
-              src={userData.avatar}
-              alt="LeetCode Avatar"
-              className="w-28 h-28 rounded-full"
-            />
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+      <div className="w-full max-w-3xl bg-white shadow-2xl rounded-2xl p-8">
 
-            <div className="flex-1">
-              <h2 className="text-2xl font-semibold">
-                {userData.username}
-              </h2>
+        {/* Header */}
+        <h1 className="text-3xl font-bold text-center text-orange-600 mb-6">
+          LeetCode Profile Viewer
+        </h1>
 
-              <p className="mt-1">
-                Ranking: {userData.ranking}
-              </p>
+        {/* Input Section */}
+        <div className="flex justify-center gap-3 mb-6">
+          <input
+            className="px-4 py-2 border border-gray-300 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-orange-400"
+            type="text"
+            placeholder="Enter LeetCode Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
 
-              <p className="mt-1">
-                Total Solved:{" "}
-                {userData.submitStats?.acSubmissionNum[0]?.count}
-              </p>
+          <button
+            className="px-5 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-500 transition duration-200 disabled:opacity-60"
+            onClick={fetchUser}
+            disabled={loading || !username.trim()}
+          >
+            {loading ? "Loading..." : "Search"}
+          </button>
+        </div>
 
-              <p className="text-sm mt-1">
-                Easy: {userData.submitStats?.acSubmissionNum[1]?.count} |
-                Medium: {userData.submitStats?.acSubmissionNum[2]?.count} |
-                Hard: {userData.submitStats?.acSubmissionNum[3]?.count}
-              </p>
+        {error && (
+          <div className="text-red-500 text-center mb-4">{error}</div>
+        )}
+
+        {/* Profile Card */}
+        {userData && (
+          <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-xl p-6 shadow-lg">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+
+              <img
+                src={userData.avatar}
+                alt="LeetCode Avatar"
+                className="w-32 h-32 rounded-full border-4 border-white shadow-md"
+              />
+
+              <div className="flex-1 text-center md:text-left">
+                <h2 className="text-2xl font-bold">
+                  {userData.username}
+                </h2>
+
+                <p className="mt-2 text-sm">
+                  🌍 Global Ranking: {userData.ranking}
+                </p>
+
+                <p className="mt-3 text-lg font-semibold">
+                  Total Solved: {userData.submitStats?.acSubmissionNum[0]?.count}
+                </p>
+
+                <div className="flex flex-wrap gap-3 mt-3 justify-center md:justify-start">
+                  <span className="bg-white text-green-600 px-3 py-1 rounded-full text-sm font-semibold">
+                    Easy: {userData.submitStats?.acSubmissionNum[1]?.count}
+                  </span>
+
+                  <span className="bg-white text-yellow-600 px-3 py-1 rounded-full text-sm font-semibold">
+                    Medium: {userData.submitStats?.acSubmissionNum[2]?.count}
+                  </span>
+
+                  <span className="bg-white text-red-600 px-3 py-1 rounded-full text-sm font-semibold">
+                    Hard: {userData.submitStats?.acSubmissionNum[3]?.count}
+                  </span>
+                </div>
+              </div>
             </div>
-          </>
-        ) : (
-          <div>Enter username and click Submit</div>
+          </div>
+        )}
+
+        {/* Calendar Section */}
+        {calendar && (
+          <div className="mt-8 bg-gray-50 rounded-xl p-5 shadow-inner text-center">
+            <h3 className="text-lg font-semibold mb-2 text-gray-700">
+              Submission Activity
+            </h3>
+            <p className="text-gray-600">
+              Active Days: {Object.keys(calendar).length}
+            </p>
+          </div>
         )}
       </div>
-
-      <div className="mt-4 flex justify-center gap-2">
-        <input
-          className="px-3 py-2 border rounded-md w-64"
-          type="text"
-          placeholder="Enter LeetCode Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-
-        <button
-          className="px-3 py-1 bg-orange-600 text-white rounded-md"
-          onClick={fetchUser}
-          disabled={loading || !username.trim()}
-        >
-          {loading ? "Loading..." : "Submit"}
-        </button>
-      </div>
-
-      {error && (
-        <div className="text-red-500 mt-3 text-center">{error}</div>
-      )}
-
-      {/* Simple Calendar View */}
-      {calendar && (
-        <div className="mt-6 text-center">
-          <h3 className="text-lg font-semibold mb-2">
-            Submission Activity (Last Days)
-          </h3>
-          <p>Total Active Days: {Object.keys(calendar).length}</p>
-        </div>
-      )}
     </div>
   );
 }
