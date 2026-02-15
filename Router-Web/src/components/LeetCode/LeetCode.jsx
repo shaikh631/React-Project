@@ -15,20 +15,30 @@ function LeetCode() {
     setError(null);
 
     try {
+      // Fetch user profile
       const res = await fetch(
         `https://alfa-leetcode-api.onrender.com/${uname}`
       );
-
       if (!res.ok) throw new Error("User not found");
-
       const json = await res.json();
-
       setUserData(json);
 
-      // Parse calendar JSON
-      if (json.submissionCalendar) {
-        const parsedCalendar = JSON.parse(json.submissionCalendar);
+      // Fetch calendar from new endpoint
+      const calRes = await fetch(
+        `https://alfa-leetcode-api.onrender.com/${uname}/calendar`
+      );
+      if (calRes.ok) {
+        const calJson = await calRes.json();
+        // The API may return the calendar as an object or as a stringified JSON
+        let parsedCalendar = calJson;
+        if (typeof calJson === "string") {
+          try {
+            parsedCalendar = JSON.parse(calJson);
+          } catch {}
+        }
         setCalendar(parsedCalendar);
+      } else {
+        setCalendar(null);
       }
     } catch (err) {
       setUserData(null);
