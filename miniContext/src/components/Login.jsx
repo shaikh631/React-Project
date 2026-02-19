@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react'
 import UserContext from '../context/UserContext';
 
+// Using Context API
+
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
