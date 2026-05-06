@@ -3,6 +3,7 @@ import { login, logout } from './store/authSlice';
 import { useDispatch } from 'react-redux';
 import authSevice from './appwrite/auth';
 import { Header, Footer } from './components';
+import Logo from './components/Logo';
 import { Outlet } from 'react-router-dom';
 
 import './App.css';
@@ -37,7 +38,11 @@ function App() {
     </>
   ) : (
     <div className="bg-gray-100 text-gray-800 w-full h-screen flex items-center justify-center">
-      Loading...
+      <div className="text-center">
+        <Logo width="120px" />
+        <div className="loader" aria-hidden="true" />
+        <p className="mt-3">Loading MegaBlog — preparing your feed...</p>
+      </div>
     </div>
   );
 }

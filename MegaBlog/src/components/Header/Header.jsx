@@ -1,26 +1,74 @@
 import React from 'react'
-import './Header.css'
+import { Link, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import Logo from '../Logo'
+import Container from '../Container'
+import LogoutBtn from './LogoutBtn'
 
 function Header() {
-	return (
-		<header className="mb-header">
-			<div className="mb-header__inner">
-				<div className="mb-logo">MegaBlog</div>
+  const authStatus = useSelector((state) => state.auth.status)
+  const navigate = useNavigate()
 
-				<nav className="mb-nav" aria-label="Main navigation">
-					<a href="#" className="mb-nav__link">Home</a>
-					<a href="#" className="mb-nav__link">Articles</a>
-					<a href="#" className="mb-nav__link">About</a>
-					<a href="#" className="mb-nav__link">Contact</a>
-				</nav>
+  const navItems = [
+    {
+      name: 'Home',
+      slug: "/",
+      active: true
+    }, 
+    {
+      name: "Login",
+      slug: "/login",
+      active: !authStatus,
+  },
+  {
+      name: "Signup",
+      slug: "/signup",
+      active: !authStatus,
+  },
+  {
+      name: "All Posts",
+      slug: "/all-posts",
+      active: authStatus,
+  },
+  {
+      name: "Add Post",
+      slug: "/add-post",
+      active: authStatus,
+  },
+  ]
 
-				<div className="mb-actions">
-					<input className="mb-search" placeholder="Search..." aria-label="Search" />
-					<button className="mb-btn">Sign In</button>
-				</div>
-			</div>
-		</header>
-	)
+
+  return (
+    <header className='py-3 shadow bg-gray-500'>
+      <Container>
+        <nav className='flex'>
+          <div className='mr-4'>
+            <Link to='/'>
+              <Logo width='70px'   />
+
+              </Link>
+          </div>
+          <ul className='flex ml-auto'>
+            {navItems.map((item) => 
+            item.active ? (
+              <li key={item.name}>
+                <button
+                onClick={() => navigate(item.slug)}
+                className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
+                >{item.name}</button>
+              </li>
+            ) : null
+            )}
+            {authStatus && (
+              <li>
+                <LogoutBtn />
+              </li>
+            )}
+          </ul>
+        </nav>
+        </Container>
+    </header>
+  )
 }
 
 export default Header
