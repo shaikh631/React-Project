@@ -5,7 +5,7 @@ function Select({
     label, 
     options , 
     className ,
-    ...props,
+    ...props
 } ,ref) {
     const id = useId();
   return (

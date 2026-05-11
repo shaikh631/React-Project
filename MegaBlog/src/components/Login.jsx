@@ -1,30 +1,39 @@
 import React,{useState} from 'react'
 import {Button, Input, Logo} from "./index"
-import { data, Link , useNavigate } from 'react-router-dom'
+import { Link , useNavigate } from 'react-router-dom'
 import { login as authlogin } from '../store/authSlice'
 import { useDispatch } from 'react-redux'
 import { useForm } from "react-hook-form";
-import { authSevice } from '../appwrite/auth'
+import authService  from '../appwrite/auth'
 
 
 function Login() {
     const navigate = useNavigate() ;
     const dispatch = useDispatch();
-    const {register, handleSubmit} = useForm() ;
+    const {register, handleSubmit, formState: { errors }} = useForm() ;
     const [error , seterror] = useState("");
 
-    const login = async (data) =>{
+    const login = async (data) => {
         seterror("");
         try {
-            const session = await authSevice.login(data)
-            if(session){
-                const userData = await authSevice.getCurrentUser()
-                if(userData) dispatch(authlogin(userData));
-                navigate("/")
+            console.log("Login: Attempting login...", data.email)
+            const session = await authService.login(data)
+            if (session) {
+                console.log("Login: Session created. Fetching user...")
+                const userData = await authService.getCurrentUser()
+                if (userData) {
+                    console.log("Login: Got user data. Dispatching action...")
+                    dispatch(authlogin(userData))
+                    navigate("/")
+                } else {
+                    seterror("Login successful but couldn't fetch user data. Check Appwrite CORS and session settings.")
+                }
+            } else {
+                seterror("Login failed. Check console for Appwrite errors and verify credentials.")
             }
-            
         } catch (error) {
-            seterror(error.message)
+            console.error("Login error:", error)
+            seterror(error?.message || String(error))
         }
     }
 
@@ -50,29 +59,37 @@ function Login() {
         </p>
         {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
 
-        <form onSubmit={handleSubmit(login)} className='mt-8' >
-             <div className='space-y-5'>
+        <form onSubmit={handleSubmit(login)} className='mt-8' onClick={() => console.log("Form validation errors:", errors)}>
+             <div className='space-y-3'>
                 <Input label = 'Email :'
                 placeholder='Enter your email'
                 type='email'
                 {...register('email' , {
-                    required:true , 
+                    required: "Email is required" , 
                     validate :{
                         matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
                         "Email address must be a valid address",
                     }
                 })}
                  />
+                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                 <Input
-                    type="password"
+                    label="Password: "
+                            type="password"
+                             placeholder="Enter your password (min 6 chars, with letter & number)"
                     {...register("password", {
                     required: "Password is required",
+                    minLength: {
+                        value: 6,
+                        message: "Password must be at least 6 characters"
+                    },
                     pattern: {
-                    value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/,
-                    message: "Password must be strong"
+                    value: /^(?=.*[A-Za-z])(?=.*\d).{6,}$/,
+                    message: "Password must contain at least one letter and one number"
                      }
                     })}
                 />
+                {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
                   <Button
                 type="submit"
                 className="w-full"

@@ -99,11 +99,10 @@ export class Service{
                 conf.AppWriteCollection,
                 queries
             )
-            return true; 
         } catch (error) {
             console.log("Appwrite Service :: getPosts :: error" , error);
-            throw error;
-            return false
+            // Return null on unauthorized or other errors so the UI can handle it gracefully.
+            return null;
         }
      }
      async uploadImage(file){
@@ -148,6 +147,6 @@ export class Service{
       
 }
 
-const service = Service();
+const service = new Service();
 
 export default service ;
