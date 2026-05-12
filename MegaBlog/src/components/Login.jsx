@@ -23,7 +23,8 @@ function Login() {
                 const userData = await authService.getCurrentUser()
                 if (userData) {
                     console.log("Login: Got user data. Dispatching action...")
-                    dispatch(authlogin(userData))
+                    const safeUser = JSON.parse(JSON.stringify(userData));
+                    dispatch(authlogin({ userData: safeUser }))
                     navigate("/")
                 } else {
                     seterror("Login successful but couldn't fetch user data. Check Appwrite CORS and session settings.")

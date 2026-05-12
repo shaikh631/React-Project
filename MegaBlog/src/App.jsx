@@ -14,7 +14,8 @@ function App() {
     authService.getCurrentUser()
     .then((userData) => {
       if (userData) {
-        dispatch(login({userData}))
+        const safeUser = JSON.parse(JSON.stringify(userData));
+        dispatch(login({ userData: safeUser }))
       } else {
         dispatch(logout())
       }

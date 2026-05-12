@@ -1,6 +1,6 @@
 
 import React,{useState} from 'react'
-import {Button, Input, Logo} from "./index"
+import {Button, Input, Login, Logo} from "./index"
 import { Link , useNavigate } from 'react-router-dom'
 import {login} from '../store/authSlice'
 import { useDispatch } from 'react-redux'
@@ -34,12 +34,10 @@ function Signup() {
             const created = await authService.createAccount(data)
             if (created) {
                 console.log("Signup: Account created successfully. Now logging in...")
-                // Small delay to ensure account is fully created before login
-                await new Promise(resolve => setTimeout(resolve, 500))
-                const session = await authService.login({ email: data.email, password: data.password })
+                const session = await authService.login(created)
                 if (session) {
                     console.log("Signup: Login session created. Checking active sessions...")
-                    await authService.listSessions() // Diagnostic
+                   // await authService.listSessions() // Diagnostic
                     const currentUser = await authService.getCurrentUser()
                     if (currentUser) {
                         console.log("Signup: Got current user. Dispatching login action...")
@@ -59,6 +57,16 @@ function Signup() {
             setError(error?.message || String(error))
         }
     }
+
+    // const create  = async(data) =>{
+    //     const userdata = await authService.createAccount(data)
+    //     if(userdata){
+    //         const userdata = await authService.getCurrentUser();
+    //         if(userdata) dispatch(ogin(userdata))
+    //             navigate("/")
+    //     }
+    // }
+
   return (
     <div className="flex items-center justify-center">
             <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
