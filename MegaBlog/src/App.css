@@ -1,4 +1,4 @@
-.counter {
+/* .counter {
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 5px;
@@ -184,7 +184,7 @@
 }
 
 /* Simple spinner used on the loading screen */
-.loader {
+/* .loader {
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -196,4 +196,4 @@
 
 @keyframes spin {
   to { transform: rotate(360deg); }
-}
+} */ 

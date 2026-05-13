@@ -7,10 +7,11 @@ import App from './App.jsx'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Home from './pages/Home.jsx'
-import { AuthLayout, Login } from './components/index.js'
+import { AuthLayout } from './components/index.js'
 
 import AddPost from "./pages/AddPost";
-import Signup from './pages/Signup'
+import Signup from './pages/Signup';
+import Login from './pages/Login.jsx'
 import EditPost from "./pages/EditPost";
 import React from 'react'
 

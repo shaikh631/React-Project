@@ -18,13 +18,16 @@ function EditPost() {
         }
     } ,[slug , navigate])
 
-  return post ? (
-    <div className='py-8'>
-        <Controller>
-            <PostForm post={post} />
-        </Controller>
+    return post ? (
+        <div className="w-full bg-gray-50 min-h-screen py-12">
+            <Container>
+                <div className="max-w-4xl mx-auto">
+                    <h1 className="text-3xl font-bold text-gray-900 mb-6">Edit Post</h1>
+                    <PostForm post={post} />
+                </div>
+            </Container>
         </div>
-  ): null
+    ) : null
 }
 
 export default EditPost

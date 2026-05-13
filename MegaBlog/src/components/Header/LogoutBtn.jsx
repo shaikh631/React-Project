@@ -2,6 +2,9 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import authSevice from '../../appwrite/auth'
 import { logout } from '../../store/authSlice'
+// import { useNavigate } from 'react-router-dom'
+
+//  const navigate = useNavigate()
 
 function Logoutbtn() {
     const dispatch = useDispatch();
@@ -9,6 +12,8 @@ function Logoutbtn() {
         authSevice.logout()
             .then(() => {
                 dispatch(logout());
+                // navigate("/");
+
             })
             .catch((error) => {
                 console.error('Logout failed:', error);

@@ -3,9 +3,11 @@ import { Container , PostForm } from '../components'
 
 function AddPost() {
   return (
-    <div className='p-8'>
+    <div className='w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12'>
         <Container>
-            <PostForm />
+            <div className='max-w-6xl'>
+                <PostForm />
+            </div>
         </Container>
     </div>
   )
