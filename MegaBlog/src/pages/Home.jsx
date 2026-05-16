@@ -2,6 +2,7 @@ import React, {useEffect , useState} from 'react'
 import service from '../appwrite/config'
 import { Container , PostCard } from '../components'
 
+
 function Home() {
     const [posts , setpost] = useState(null)
 
