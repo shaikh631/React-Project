@@ -48,6 +48,7 @@ export default function PostForm({ post }) {
             const dbPost = await appwriteService.updatePost(post.$id, {
                 ...data,
                 featuredImage: file ? file.$id : undefined,
+                userName: userData?.name || userData?.email || 'Unknown Author',
             });
 
             if (dbPost) {
@@ -59,7 +60,11 @@ export default function PostForm({ post }) {
             if (file) {
                 const fileId = file.$id;
                 data.featuredImage = fileId;
-                const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
+                const dbPost = await appwriteService.createPost({ 
+                    ...data, 
+                    userId: userData.$id,
+                    userName: userData?.name || userData?.email || 'Unknown Author'
+                });
 
                 if (dbPost) {
                     navigate(`/post/${dbPost.$id}`);

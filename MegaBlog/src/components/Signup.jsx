@@ -33,24 +33,34 @@ function Signup() {
             console.log("Signup: Creating account...", data.email)
             const created = await authService.createAccount(data)
             if (created) {
-                console.log("Signup: Account created successfully. Now logging in...")
-                const session = await authService.login(created)
-                if (session) {
-                    console.log("Signup: Login session created. Checking active sessions...")
-                   // await authService.listSessions() // Diagnostic
-                    const currentUser = await authService.getCurrentUser()
-                    if (currentUser) {
-                        console.log("Signup: Got current user. Dispatching login action...")
-                        dispatch(login(currentUser))
-                        navigate("/")
-                    } else {
-                        setError("Session created but user data unavailable. Check Appwrite CORS: add http://localhost:* to Allowed Origins in Appwrite Console.")
-                    }
+              console.log("Signup: Account created successfully.")
+
+              // createAccount may return a session (we log the user in there),
+              // or it may return the created user object. Handle both cases.
+              let session = null
+              if (created && (created.$id || created.userId)) {
+                // assume this is a session or session-like object
+                session = created
+              } else {
+                // fallback: create a session using the form credentials
+                session = await authService.login({ email: data.email, password: data.password })
+              }
+
+              if (session) {
+                console.log("Signup: Login session present. Checking active sessions...")
+                const currentUser = await authService.getCurrentUser()
+                if (currentUser) {
+                  console.log("Signup: Got current user. Dispatching login action...")
+                  dispatch(login(currentUser))
+                  navigate("/")
                 } else {
-                    setError("Account created but login failed. Check Appwrite project status and browser console.")
+                  setError("Session created but user data unavailable. Check Appwrite CORS: add http://localhost:* to Allowed Origins in Appwrite Console.")
                 }
+              } else {
+                setError("Account created but login failed. Check Appwrite project status and browser console.")
+              }
             } else {
-                setError("Unable to create account. Check browser console for Appwrite errors.")
+              setError("Unable to create account. Check browser console for Appwrite errors.")
             }
         } catch (error) {
             console.error("Signup error:", error)
