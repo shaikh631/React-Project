@@ -10,24 +10,6 @@ export default function PostForm({ post }) {
     const userData = useSelector((state) => state.auth.userData);
     const isLoggedIn = useSelector((state) => state.auth.status);
 
-    // Move early return BEFORE any hooks are called
-    if (!isLoggedIn) {
-        return (
-            <div className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex items-center justify-center">
-                <div className="text-center">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-4">Access Denied</h1>
-                    <p className="text-gray-600 mb-8">Please log in to create posts.</p>
-                    <button 
-                        onClick={() => navigate("/login")}
-                        className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:shadow-lg transition-shadow"
-                    >
-                        Go to Login
-                    </button>
-                </div>
-            </div>
-        );
-    }
-
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
             title: post?.Title || "",
@@ -48,7 +30,7 @@ export default function PostForm({ post }) {
             const dbPost = await appwriteService.updatePost(post.$id, {
                 ...data,
                 featuredImage: file ? file.$id : undefined,
-                userName: userData?.name || userData?.email || 'Unknown Author',
+                userName: userData?.name || userData?.$id ,
             });
 
             if (dbPost) {
@@ -63,7 +45,7 @@ export default function PostForm({ post }) {
                 const dbPost = await appwriteService.createPost({ 
                     ...data, 
                     userId: userData.$id,
-                    userName: userData?.name || userData?.email || 'Unknown Author'
+                    userName: userData?.name || userData?.$id,
                 });
 
                 if (dbPost) {
@@ -93,6 +75,23 @@ export default function PostForm({ post }) {
 
         return () => subscription.unsubscribe();
     }, [watch, slugTransform, setValue]);
+
+    if (!isLoggedIn) {
+        return (
+            <div className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex items-center justify-center">
+                <div className="text-center">
+                    <h1 className="text-3xl font-bold text-gray-900 mb-4">Access Denied</h1>
+                    <p className="text-gray-600 mb-8">Please log in to create posts.</p>
+                    <button 
+                        onClick={() => navigate("/login")}
+                        className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:shadow-lg transition-shadow"
+                    >
+                        Go to Login
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <form onSubmit={handleSubmit(submit)} className="w-full bg-white rounded-lg shadow-lg p-8">

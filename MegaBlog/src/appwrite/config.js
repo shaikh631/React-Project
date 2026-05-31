@@ -95,6 +95,19 @@ export class Service{
         }
     }
 
+    async getUserById(userId) {
+        try {
+            return await this.databases.getDocument(
+                conf.AppWriteDataBaseId,
+                conf.AppWriteUserCollectionId,
+                userId
+            )
+        } catch (error) {
+            console.log("Appwrite service :: getUserById :: error", error);
+            return null
+        }
+    }
+
     // file upload service
 
     async uploadFile(file){
@@ -107,6 +120,19 @@ export class Service{
         } catch (error) {
             console.log("Appwrite serive :: uploadFile :: error", error);
             return false
+        }
+    }
+
+    async getUserById(userId) {
+        try {
+            return await this.databases.getDocument(
+                conf.AppWriteDataBaseId,
+                conf.AppWriteUserCollectionId,
+                userId
+            )
+        } catch (error) {
+            console.log("Appwrite service :: getUserById :: error", error);
+            return null
         }
     }
 

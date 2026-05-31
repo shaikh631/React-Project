@@ -9,6 +9,7 @@ function Post() {
       const [post, setPost] = useState(null);
       const [imgError, setImgError] = useState(false);
       const [showFullImage, setShowFullImage] = useState(false);
+      const [authorName, setAuthorName] = useState('Unknown Author');
     const { slug } = useParams();
     const navigate = useNavigate();
     const placeholderImg = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="600" height="400"%3E%3Crect fill="%23ddd" width="600" height="400"/%3E%3Ctext x="50%25" y="50%25" font-size="24" fill="%23999" text-anchor="middle" dy=".3em"%3ENo Image%3C/text%3E%3C/svg%3E';
@@ -20,7 +21,21 @@ function Post() {
     useEffect(() => {
         if (slug) {
             appwriteService.getPost(slug).then((post) => {
-                if (post) setPost(post);
+                if (post) {
+                    setPost(post);
+                    // Fetch author name from Users collection
+                    if (post.UserId) {
+                        appwriteService.getUserById(post.UserId).then((user) => {
+                            if (user && user.name) {
+                                setAuthorName(user.name);
+                            } else if (post.UserName) {
+                                setAuthorName(post.UserName);
+                            }
+                        });
+                    } else if (post.UserName) {
+                        setAuthorName(post.UserName);
+                    }
+                }
                 else navigate("/");
             });
         } else navigate("/");
@@ -62,7 +77,7 @@ function Post() {
                     <div className="p-8">
                         <h1 className="text-3xl font-extrabold text-gray-900 mb-2">{post.Title}</h1>
                         <div className="flex items-center text-sm text-gray-500 gap-4 mb-6">
-                            <span>By {post.UserName || 'Unknown Author'}</span>
+                            <span>By {authorName}</span>
                             <span>•</span>
                             <span>{new Date(post.$createdAt || Date.now()).toLocaleDateString()}</span>
                         </div>

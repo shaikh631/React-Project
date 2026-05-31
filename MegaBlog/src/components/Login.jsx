@@ -17,6 +17,7 @@ function Login() {
         seterror("");
         try {
             console.log("Login: Attempting login...", data.email)
+            console.log("Name...", data.name)
             
 
             const session = await authService.login(data)
