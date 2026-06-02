@@ -1,11 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light;
+}
+
+:root.dark {
+  color-scheme: dark;
 }
 
 html {
@@ -13,27 +15,22 @@ html {
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  min-width: 320px;
+  background: #f8fafc;
+  color: #0f172a;
+  transition: background-color 200ms ease, color 200ms ease;
 }
 
-@layer components {
-  .btn-primary {
-    @apply px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl;
-  }
+:root.dark body {
+  background: #020617;
+  color: #e2e8f0;
+}
 
-  .btn-secondary {
-    @apply px-8 py-3 bg-white text-blue-600 font-semibold rounded-lg border-2 border-blue-600 hover:bg-blue-50 transition-all duration-300;
-  }
-
-  .btn-outline {
-    @apply px-6 py-2 border-2 border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-all duration-300;
-  }
-
-  .section-title {
-    @apply text-4xl md:text-5xl font-bold text-gray-900 mb-4;
-  }
-
-  .section-subtitle {
-    @apply text-lg text-gray-600 mb-12 max-w-2xl mx-auto;
-  }
+button,
+a,
+input,
+select,
+textarea {
+  font: inherit;
 }

@@ -76,7 +76,7 @@ function Pricing() {
               {/* Card Header */}
               <div className={`p-8 ${
                 plan.highlighted
-                  ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white'
+                  ? 'bg-linear-to-r from-blue-600 to-blue-700 text-white'
                   : 'bg-gray-50'
               }`}>
                 {plan.highlighted && (
@@ -136,7 +136,7 @@ function Pricing() {
         </div>
 
         {/* CTA */}
-        <div className="mt-16 bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl p-12 text-center text-white">
+        <div className="mt-16 bg-linear-to-r from-blue-600 to-blue-700 rounded-xl p-12 text-center text-white">
           <h3 className="text-3xl font-bold mb-4">Still deciding?</h3>
           <p className="text-lg text-blue-100 mb-6">
             Talk to our experts to find the perfect insurance plan for you
