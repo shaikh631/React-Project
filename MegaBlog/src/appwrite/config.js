@@ -7,14 +7,25 @@ export class Service{
     bucket;
     
     constructor(){
-        this.client
+        if (!conf.AppWrite || !conf.AppWriteProjectID) {
+            console.error("Appwrite service missing configuration.", {
+                endpoint: conf.AppWrite,
+                project: conf.AppWriteProjectID,
+            });
+        }
+        this.client = this.client
         .setEndpoint(conf.AppWrite)
         .setProject(conf.AppWriteProjectID);
+        console.log("Appwrite service configured.", {
+            endpoint: conf.AppWrite,
+            project: conf.AppWriteProjectID,
+            origin: window.location.origin,
+        });
         this.databases = new Databases(this.client);
         this.bucket = new Storage(this.client);
     }
 
-    async createPost({title, slug, content, featuredImage, status, userId , userName}){
+    async createPost({title, slug, content, featuredImage, status, userId}){
         try {
             return await this.databases.createDocument(
                 conf.AppWriteDataBaseId,
@@ -26,7 +37,6 @@ export class Service{
                     FeaturedImage: featuredImage,
                     status,
                     UserId: userId,
-                    UserName: userName,
                 }
             )
         } catch (error) {
@@ -34,7 +44,7 @@ export class Service{
         }
     }
 
-    async updatePost(slug, {title, content, featuredImage, status, userName}){
+    async updatePost(slug, {title, content, featuredImage, status}){
         try {
             return await this.databases.updateDocument(
                 conf.AppWriteDataBaseId,
@@ -45,7 +55,6 @@ export class Service{
                     Context: content,
                     FeaturedImage: featuredImage,
                     status,
-                    UserName: userName,
                 }
             )
         } catch (error) {
@@ -82,7 +91,7 @@ export class Service{
         }
     }
 
-    async getPosts(queries = [Query.equal("status", "active")]){
+   async getPosts(queries = [Query.equal("status", true)]) {
         try {
             return await this.databases.listDocuments(
                 conf.AppWriteDataBaseId,
@@ -90,7 +99,15 @@ export class Service{
                 queries
             )
         } catch (error) {
-            console.log("Appwrite serive :: getPosts :: error", error);
+            console.error("Appwrite service :: getPosts :: error", error, {
+                endpoint: conf.AppWrite,
+                origin: window.location.origin,
+            });
+            if (error instanceof TypeError && error.message === "Failed to fetch") {
+                console.error(
+                    "Failed to fetch from Appwrite. Check CORS / Allowed Origins in Appwrite Console and verify the Appwrite endpoint is reachable."
+                );
+            }
             return false
         }
     }
@@ -120,19 +137,6 @@ export class Service{
         } catch (error) {
             console.log("Appwrite serive :: uploadFile :: error", error);
             return false
-        }
-    }
-
-    async getUserById(userId) {
-        try {
-            return await this.databases.getDocument(
-                conf.AppWriteDataBaseId,
-                conf.AppWriteUserCollectionId,
-                userId
-            )
-        } catch (error) {
-            console.log("Appwrite service :: getUserById :: error", error);
-            return null
         }
     }
 

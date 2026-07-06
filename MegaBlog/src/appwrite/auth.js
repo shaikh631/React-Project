@@ -7,11 +7,24 @@ export class AuthService {
     account;
 
     constructor() {
-        this.client
+        if (!conf.AppWrite || !conf.AppWriteProjectID) {
+            console.error("Appwrite auth service missing configuration.", {
+                endpoint: conf.AppWrite,
+                project: conf.AppWriteProjectID,
+            });
+        }
+
+        this.client = this.client
             .setEndpoint(conf.AppWrite)
             .setProject(conf.AppWriteProjectID);
+
+        console.log("Appwrite auth service configured.", {
+            endpoint: conf.AppWrite,
+            project: conf.AppWriteProjectID,
+            origin: window.location.origin,
+        });
+
         this.account = new Account(this.client);
-            
     }
 
     async createAccount({email, password, name}) {
@@ -64,7 +77,24 @@ export class AuthService {
         try {
             return await this.account.get();
         } catch (error) {
-            console.log("Appwrite serive :: getCurrentUser :: error", error);
+            const message = error?.message || "";
+            const unauthenticated = message.includes("missing scopes") || message.includes("account");
+
+            if (unauthenticated) {
+                console.debug("Appwrite service :: getCurrentUser :: unauthenticated guest user", error);
+            } else {
+                console.error("Appwrite service :: getCurrentUser :: error", error, {
+                    endpoint: conf.AppWrite,
+                    project: conf.AppWriteProjectID,
+                    origin: window.location.origin,
+                });
+            }
+
+            if (error instanceof TypeError && error.message === "Failed to fetch") {
+                console.error(
+                    "Failed to fetch from Appwrite. Check CORS / Allowed Origins in Appwrite Console and verify the Appwrite endpoint is reachable."
+                );
+            }
         }
 
         return null;

@@ -30,7 +30,6 @@ export default function PostForm({ post }) {
             const dbPost = await appwriteService.updatePost(post.$id, {
                 ...data,
                 featuredImage: file ? file.$id : undefined,
-                userName: userData?.name || userData?.$id ,
             });
 
             if (dbPost) {
@@ -45,7 +44,6 @@ export default function PostForm({ post }) {
                 const dbPost = await appwriteService.createPost({ 
                     ...data, 
                     userId: userData.$id,
-                    userName: userData?.name || userData?.$id,
                 });
 
                 if (dbPost) {
