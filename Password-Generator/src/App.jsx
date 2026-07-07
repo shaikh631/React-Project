@@ -1,43 +1,41 @@
 import { useState , useCallback, useEffect, useRef  } from 'react'
 import './App.css'
 
+    
 function App() {
-  const [length, setlength] = useState(8)
-  const [NumberAllowed , setNumberAllowed] = useState(false)
-  const [CharAllowed , setCharAllowed] = useState(false)
-  const [password , setpassword] = useState("")
 
-  const passwordRef = useRef(null)
+  const [length , setlength] = useState(8);
+    const [nums , setNums] = useState(false);
+    const [spil , setspil] = useState(false);
+    const [password , setPassword] = useState("");
+    const passwordRef = useRef(null);
 
-  const passwordGenerator = useCallback(() => {
-    let pass = '';
-    let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    const passwordGenrate = useCallback(() =>{
+      let pass = '';
+      let str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+      if(nums)  str+= '0123456789';
+      if(spil) str += '!@#$%^&*-_+=[]{}~`'
 
-    if(NumberAllowed) str += "0123456789"
-    if(CharAllowed) str += "!@#$%^&*-_+=[]{}~`"
+      for(let i = 0 ; i< length; i++){
+        const random = Math.floor(Math.random() * str.length)
+        pass += str.charAt(random);
+      }
+      setPassword(pass);
+    } , [length , nums , spil , setPassword]);
 
-    for (let i = 0; i < length; i++) {
-      let char = Math.floor(Math.random() * str.length)
-      pass += str.charAt(char)
+    useEffect(() => passwordGenrate() ,[length , passwordGenrate , nums , spil])
+
+    const copyPasswordToClipboard = () =>{
+      passwordRef.current?.select();
+      window.navigator.clipboard.writeText(password);
     }
-
-    setpassword(pass)
-  }, [length , NumberAllowed , CharAllowed])
-
-  const copyPasswordToClipboard = useCallback(() => {
-    passwordRef.current?.select();
-    window.navigator.clipboard.writeText(password)
-  }, [password])
-
-  useEffect(() => {
-    passwordGenerator()
-  }, [length , NumberAllowed , CharAllowed])
-
+  
   return (
     <>
+
+
       {/* <div className="w-full max-w-md mx-auto shadow-md rounded-lg px-4 py-3 my-8 bg-gray-800 text-orange-500">
        */}
-       <img src="" alt="" />
        <div className="w-150 h-60 shadow-md rounded-lg px-8 py-8 my-8 bg-gray-800 text-orange-500">
         <h1 className='text-white text-center my-3'>Password Generator</h1>
 
@@ -74,9 +72,9 @@ function App() {
           <div className="flex items-center gap-x-1">
             <input
               type="checkbox"
-              defaultChecked={NumberAllowed}
+              defaultChecked={nums}
               id="numberInput"
-              onChange={() => setNumberAllowed(prev => !prev)}
+              onChange={() => setNums(prev => !prev)}
             />
             <label htmlFor="numberInput">Numbers</label>
           </div>
@@ -84,9 +82,9 @@ function App() {
           <div className="flex items-center gap-x-1">
             <input
               type="checkbox"
-              defaultChecked={CharAllowed}
+              defaultChecked={spil}
               id="characterInput"
-              onChange={() => setCharAllowed(prev => !prev)}
+              onChange={() => setspil(prev => !prev)}
             />
             <label htmlFor="characterInput">Characters</label>
           </div>
