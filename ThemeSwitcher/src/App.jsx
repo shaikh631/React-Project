@@ -5,12 +5,15 @@ import Card from './components/Card'
 import './App.css'
 
 function App() {
-  const [themeMode, setThemeMode] = useState("light")
+  const [themeMode, setThemeMode] = useState(() => {
+    return localStorage.getItem("theme") || "light"
+  })
 
-  const lightTheme = () =>{
+  const lightTheme = () => {
     setThemeMode("light")
   }
-  const darkTheme = () =>{
+  
+  const darkTheme = () => {
     setThemeMode("dark")
   }
 
@@ -18,7 +21,7 @@ function App() {
     const html = document.documentElement;
     html.classList.remove("light", "dark");
     html.classList.add(themeMode);
-    console.log("Theme changed:", themeMode);
+    localStorage.setItem("theme", themeMode);
   }, [themeMode]);
 
   return (
