@@ -1,4 +1,12 @@
 @import "tailwindcss";
 body{
     background-color: #E7E6E4;
+    background-attachment: fixed;
+}
+#root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+
 }

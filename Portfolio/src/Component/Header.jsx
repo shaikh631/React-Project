@@ -5,7 +5,7 @@ import { Link, NavLink } from 'react-router-dom'
 
 function Header() {
   return (
-    <header className="fixed  z-30 w-full mt-2 ">
+    <header className="fixed  z-30 w-full mt-2 bg-transparent backdrop-blur-md ">
       <nav className="flex w-full items-center justify-between gap-4 px-4 py-1 md:px-8">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3">

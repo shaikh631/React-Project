@@ -1,9 +1,16 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 
 function About() {
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-10 text-slate-900 sm:px-6 lg:px-8">
-      <section className="mx-auto max-w-6xl space-y-12">
+      <motion.section
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.8 }}
+        className="mx-auto max-w-6xl space-y-12"
+      />
         <div className="space-y-4 text-center">
           <p className="text-xs uppercase tracking-[0.4em] text-slate-500">About sensiq</p>
           <h2 className="text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">
@@ -57,7 +64,6 @@ function About() {
             </div>
           </div>
         </div>
-      </section>
     </main>
   )
 }

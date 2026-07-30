@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { motion } from 'framer-motion'
 const projects = [
   {
     title: 'Smart Sleep Insights',
@@ -21,30 +21,35 @@ const projects = [
 function Projects() {
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-10 text-slate-900 sm:px-6 lg:px-8">
-      <section className="mx-auto max-w-6xl space-y-10">
-        <div className="space-y-4">
-          <p className="text-xs uppercase tracking-[0.36em] text-slate-500">Projects</p>
-          <h2 className="text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">
-            Product work built for clarity, comfort, and smarter sensing.
-          </h2>
-        </div>
+      <motion.section
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.8 }}
+        className="mx-auto max-w-6xl space-y-10"
+      />
+        <motion.div
+  initial={{ opacity: 0, x: -80 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{
+    duration: 1,
+    ease: "easeOut",
+  }}
+  className="flex w-full lg:w-1/2 flex-col justify-center gap-6"
+/>
+  <p className="text-xs uppercase tracking-[0.36em] text-slate-500">
+    FULL STACK DEVELOPER
+  </p>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {projects.map((project) => (
-            <article key={project.title} className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
-              <h3 className="text-2xl font-semibold text-slate-950">{project.title}</h3>
-              <p className="mt-4 text-slate-600 leading-7">{project.description}</p>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span key={tag} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+  <h1 className="text-4xl font-black sm:text-5xl lg:text-6xl">
+    Building modern web experiences with clean design.
+  </h1>
+
+  <p className="text-lg text-slate-600">
+    I create responsive and interactive web applications
+    using React, Java, Spring Boot and modern technologies.
+  </p>
+
     </main>
   )
 }
