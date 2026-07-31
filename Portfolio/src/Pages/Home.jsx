@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import { ChevronRight } from 'lucide-react'
 import Button from '../Component/Button'
 import { motion } from "framer-motion";
+import About from './About'
+import Projects from './Projects'
+import Skills from './Skills'
+import Contact from './Contact'
 
 function Home() {
   const [coords, setCoords] = useState({ x: 0, y: 0 })
@@ -11,6 +15,7 @@ function Home() {
   }
 
   return (
+    <>
     <main className="min-h-screen w-full  overflow-hidden text-slate-900 ">
       <section
         onMouseMove={handleMouseMove}
@@ -43,20 +48,26 @@ function Home() {
             </div>
             <div className="mt-10 flex flex-wrap gap-4">
               <Button className="inline-flex items-center gap-2 rounded-3xl bg-slate-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
-                Resume
+               <a
+                href="/AyanResume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                >
+               Resume
+                </a>
                 <ChevronRight className="h-4 w-4" strokeWidth={1.5} />
               </Button>
             </div>
           </div>
         </div>
         </motion.div>
-        <div className="absolute inset-y-10 right-40 hidden h-full lg:block lg:h-full lg:w-[50%]">
-          {/* <img
-            src="/demo.png"
+        <div className="absolute inset-y-10 right-20 hidden h-full lg:block lg:h-full lg:w-[50%]">
+          <img
+            src="/Ayan.png"
             alt="Background"
             className="h-full w-full object-cover"
-          /> */}
-          <motion.img
+          />
+          {/* <motion.img
           src="/demo.png"
           alt="Hand"
           initial={{ opacity: 0, x: 100, scale: 0.8 }}
@@ -67,9 +78,9 @@ function Home() {
             ease: "easeOut",
           }}
            className="h-full w-full object-cover"
-        />
+        /> */}
         </div>
-                <div className="absolute w-auto right-10 bottom-6 z-20 hidden rounded-[28px] border border-white/10 p-3 shadow-2xl backdrop-blur-xl text-black sm:block">
+                <div className="absolute w-auto right-10 bottom-6 z-20 hidden rounded-[28px] border border-white/10 bg-transparent p-3 shadow-2xl backdrop-blur-xl text-black sm:block">
           <div className="flex items-center justify-between gap-3 text-xs uppercase tracking-[0.35em] text-black">
             <span>Mouse</span>
             <span className="rounded-full bg-black px-2 py-1 font-semibold text-white">coords</span>
@@ -88,8 +99,13 @@ function Home() {
         
       </section>
     </main>
+    <About/>
+    <Projects/>
+    <Skills/>
+    <Contact/>
+    </>
     
   )
 }
 
-export default Home
+export default Home;

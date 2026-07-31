@@ -1,7 +1,7 @@
 @import "tailwindcss";
 body{
     background-color: #E7E6E4;
-    background-attachment: fixed;
+    /* background-attachment: fixed; */
 }
 #root {
   width: 100%;

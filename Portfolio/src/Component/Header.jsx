@@ -58,7 +58,13 @@ function Header() {
           </button> */}
 
           <Button className="inline-flex items-center gap-2 rounded-3xl bg-slate-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
-            Resume
+           <a
+                href="/AyanResume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                >
+               Resume
+                </a>
             <ChevronRight className="h-4 w-4" strokeWidth={1.5} />
           </Button>
         </div>
