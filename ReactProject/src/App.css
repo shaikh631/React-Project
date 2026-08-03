@@ -1,0 +1,156 @@
+.app-shell {
+  min-height: 100vh;
+  padding: 32px;
+  background: linear-gradient(135deg, #fdf2f8 0%, #f5f3ff 100%);
+  color: #1f2937;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.app-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #7c3aed;
+}
+
+.app-header p {
+  color: #4b5563;
+  font-size: 1rem;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.project-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.project-card {
+  border: none;
+  border-radius: 16px;
+  padding: 16px;
+  text-align: left;
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.12);
+}
+
+.project-card.selected {
+  border: 2px solid #8b5cf6;
+  background: #f5f3ff;
+}
+
+.project-badge {
+  display: inline-block;
+  margin-bottom: 10px;
+  border-radius: 999px;
+  background: #ede9fe;
+  color: #6d28d9;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.project-badge.running {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.project-card.is-running {
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+}
+
+.project-card h2 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.project-card p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.project-preview {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+}
+
+.preview-label {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8b5cf6;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.project-preview h2 {
+  margin: 0 0 8px;
+  font-size: 1.3rem;
+}
+
+.project-preview p {
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.status-pill {
+  display: inline-block;
+  margin: 8px 0 12px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: #4b5563;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-pill.running {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.project-preview ul {
+  padding-left: 18px;
+  color: #4b5563;
+}
+
+.open-button {
+  margin-top: 12px;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: #7c3aed;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.open-button:hover {
+  background: #6d28d9;
+}
+
+@media (max-width: 900px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
